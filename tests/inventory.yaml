@@ -1,0 +1,29 @@
+all:
+  children:
+    production:
+      children:
+        databases:
+          hosts:
+            database1.nextgenlabs.com:
+              ansible_host: 192.168.1.194
+              ansible_ssh_port: 2339
+            database2.nextgenlabs.com:
+              ansible_host: 192.168.1.195
+              ansible_ssh_port: 2339
+        dns:
+          hosts:
+            dns1.nextgenlabs.com:
+              ansible_host: 192.168.1.191
+              ansible_ssh_port: 2339
+            dns2.nextgenlabs.com:
+              ansible_host: 192.168.1.192
+              ansible_ssh_port: 2339
+        webservers:
+          hosts:
+            webserver1.nextgenlabs.com:
+              ansible_host: 192.168.1.193
+              ansible_ssh_port: 2339
+    ungrouped:
+      hosts:
+        localhost:
+          ansible_host: 192.168.1.62

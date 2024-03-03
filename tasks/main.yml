@@ -1,0 +1,52 @@
+---
+# tasks file for ssh
+---
+- name: play configures ssh
+  hosts: production
+  become: true
+  tasks:
+
+  - name: change default ssh port in /etc/sshd_config file
+    ansible.builtin.lineinfile:
+     path: /etc/ssh/sshd_config
+     regexp: '^Port '
+     insertafter: '^#Port '
+     line: Port 2339
+
+  - name: change selinux ssh port type
+    community.general.seport:
+      ports: 2339
+      proto: tcp
+      setype: ssh_port_t
+      state: present
+  
+  - name: remove port 22 from selinux sshport t
+    community.general.seport:
+     ports: 22
+     proto: tcp
+     setype: ssh_port-t
+     state: absent
+     local: true
+#above task might be unnecessary. this has been set in the policy
+
+  - name: remove port 22 and tcp from firewall traffic
+    ansible.posix.firewalld:
+     port: 22/tcp
+     state: disabled
+     immediate: true
+     permanent: true
+#so is this. check documentation
+
+  - name: allow firewall traffic for new port and protocol
+    ansible.posix.firewalld:
+     port: 2339/tcp
+     state: enabled
+     immediate: true
+     permanent: true
+
+  - name: restarte sshd service
+    ansible.builtin.service: 
+     name: sshd
+     state: restarted
+#last task can be configured as a handler
+

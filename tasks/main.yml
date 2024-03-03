@@ -1,6 +1,5 @@
 ---
 # tasks file for ssh
----
 - name: play configures ssh
   hosts: production
   become: true
@@ -48,5 +47,6 @@
     ansible.builtin.service: 
      name: sshd
      state: restarted
+
 #last task can be configured as a handler
 

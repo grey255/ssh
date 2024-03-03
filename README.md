@@ -1,7 +1,9 @@
 Role Name
 =========
 
-Configure ssh to use an alternative port (e.g. 2339) from tradition 22 for enhanced system sesecurity
+ * Configure ssh to use an alternative port (e.g. 2339) from tradition 22 for enhanced system sesecurity
+ 
+ * Target server RHEL9
 
 Requirements
 ------------
